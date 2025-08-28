@@ -1,0 +1,4 @@
+[app]
+app_name = "terminal"
+description = "基于 ttyd 的窗口化终端"
+index_title = "terminal"

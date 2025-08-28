@@ -1,0 +1,4 @@
+[app]
+app_name = "terminal"
+description = "Windowed terminal based on ttyd"
+index_title = "terminal"

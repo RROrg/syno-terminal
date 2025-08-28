@@ -1,0 +1,21 @@
+{
+    "terminal.js": {
+        "SynoCommunity.Terminal.AppInstance": {
+            "type": "app",
+            "title": "app:app_name",
+            "version": "0.1",
+            "icon": "images/terminal-{0}.png",
+            "texts": "texts",
+            "allowMultiInstance": false,
+            "allUsers": false,
+            "appWindow": "SynoCommunity.Terminal.AppWindow",
+            "depend": ["SynoCommunity.Terminal.AppWindow"]
+        },
+        "SynoCommunity.Terminal.AppWindow": {
+            "type": "lib",
+            "title": "app:app_name",
+            "icon": "images/terminal-{0}.png",
+            "texts": "texts"
+        }
+    }
+}
