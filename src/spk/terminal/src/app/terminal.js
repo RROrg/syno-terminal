@@ -5,8 +5,11 @@ Ext.ns("SynoCommunity.Terminal");
 Ext.define("SynoCommunity.Terminal.AppInstance", {
     extend: "SYNO.SDS.AppInstance",
     appWindowName: "SynoCommunity.Terminal.AppWindow",
-    constructor: function () {
-        this.callParent(arguments);
+    defaultWinSize: { width: 1160, height: 620 },
+    constructor: function (config) {
+        const t = this;
+         this.callParent(config);
+       // t.callParent([t.fillConfig(config)]);
     },
 });
 
@@ -15,8 +18,6 @@ Ext.define("SynoCommunity.Terminal.AppWindow", {
     layout: 'fit',
     width: '100%',
     height: '100%',
-    title: 'Terminal',
-    icon: "/webman/3rdparty/terminal/app/images/terminal.png",
     initComponent: function () {
         const path = window.location.pathname.replace(/[/]+$/, '');
         this.items = [
@@ -29,10 +30,14 @@ Ext.define("SynoCommunity.Terminal.AppWindow", {
         ];
         this.callParent(arguments);
     },
-    onOpen: function (a) {
-        SynoCommunity.Terminal.AppWindow.superclass.onOpen.call(
-            this,
-            a
-        );
+    constructor: function (config) {
+        const t = this;
+        t.callParent([t.fillConfig(config)]);
+    },
+    fillConfig: function (e) {
+        const i = {
+            // cls: 'syno-app-iscsi',
+        };
+        return Ext.apply(i, e), i;
     },
 });
