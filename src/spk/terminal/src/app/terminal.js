@@ -6,10 +6,8 @@ Ext.define("SynoCommunity.Terminal.AppInstance", {
     extend: "SYNO.SDS.AppInstance",
     appWindowName: "SynoCommunity.Terminal.AppWindow",
     defaultWinSize: { width: 1160, height: 620 },
-    constructor: function (config) {
-        const t = this;
-         this.callParent(config);
-       // t.callParent([t.fillConfig(config)]);
+    constructor: function () {
+        this.callParent(arguments);
     },
 });
 
@@ -30,6 +28,7 @@ Ext.define("SynoCommunity.Terminal.AppWindow", {
         ];
         this.callParent(arguments);
     },
+    defaultWinSize: { width: 1160, height: 620 },
     constructor: function (config) {
         const t = this;
         t.callParent([t.fillConfig(config)]);
@@ -39,5 +38,14 @@ Ext.define("SynoCommunity.Terminal.AppWindow", {
             // cls: 'syno-app-iscsi',
         };
         return Ext.apply(i, e), i;
+    },
+    onDestroy: function (e) {
+        SynoCommunity.Terminal.AppWindow.superclass.onDestroy.call(this);
+    },
+    onOpen: function (a) {
+        SynoCommunity.Terminal.AppWindow.superclass.onOpen.call(
+            this,
+            a
+        );
     },
 });
