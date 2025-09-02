@@ -1,6 +1,6 @@
 SPK_NAME = terminal
 SPK_VERS = 2.0
-SPK_REV = 2
+SPK_REV = 3
 SPK_ICON = src/$(SPK_NAME).png
 
 DEPENDS = 
@@ -11,7 +11,7 @@ UNSUPPORTED_ARCHS = $(OLD_PPC_ARCHS) $(ARMv5_ARCHS)
 include ../../mk/spksrc.common.mk
 
 MAINTAINER = RROrg/wjz304
-DESCRIPTION = "web terminal for Synology NAS"
+DESCRIPTION = "Windowed terminal for Synology NAS, based on ttyd."
 
 HOMEPAGE = https://www.kernel.org/
 LICENSE  = GPLv2
