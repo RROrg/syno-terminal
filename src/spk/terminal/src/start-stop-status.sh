@@ -39,14 +39,15 @@ start_daemon() {
     fi
 
     call_func "service_prestart"
-
-    # Create a dummy background process for this service
-    # Since this is a kernel module service, we just mark it as started
 }
 
 stop_daemon() {
-    if [ -f "${PID_FILE}" ]; then
-        rm -f "${PID_FILE}" >/dev/null 2>&1
+    if [ -z "${SVC_QUIET}" ]; then
+        if [ -z "${SVC_KEEP_LOG}" ]; then
+            date >${LOG_FILE}
+        else
+            date >>${LOG_FILE}
+        fi
     fi
 
     call_func "service_poststop"
