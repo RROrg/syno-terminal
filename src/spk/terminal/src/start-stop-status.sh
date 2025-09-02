@@ -28,7 +28,7 @@ start_daemon() {
     if [ "$(id -u)" -ne 0 ]; then
         # If not running as root, use the current user
         echo -e "⚠️ This package requires root privileges, please run as root!!!" | tee -a $SYNOPKG_TEMP_LOGFILE
-        exit 1
+        exit 0
     fi
     if [ -z "${SVC_QUIET}" ]; then
         if [ -z "${SVC_KEEP_LOG}" ]; then
