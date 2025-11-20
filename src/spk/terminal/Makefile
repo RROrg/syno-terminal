@@ -3,7 +3,7 @@ SPK_VERS = 2.0
 SPK_REV = 3
 SPK_ICON = src/$(SPK_NAME).png
 
-DEPENDS = 
+DEPENDS = cross/tmux
 
 
 UNSUPPORTED_ARCHS = $(OLD_PPC_ARCHS) $(ARMv5_ARCHS)
@@ -28,8 +28,32 @@ STARTABLE = yes
 SERVICE_SETUP = src/service-setup.sh
 SSS_SCRIPT = src/start-stop-status.sh
 
-COPY_TARGET = nop
+#COPY_TARGET = nop
 POST_STRIP_TARGET = terminal_strip_target
+
+
+TERMINAL_ARCH =
+ifeq ($(findstring $(ARCH),$(ARMv5_ARCHS) $(ARMv7L_ARCHS)),$(ARCH))
+TERMINAL_ARCH = arm
+endif
+ifeq ($(findstring $(ARCH),$(ARMv7_ARCHS)),$(ARCH))
+TERMINAL_ARCH = armhf
+endif
+ifeq ($(findstring $(ARCH),$(ARMv8_ARCHS)),$(ARCH))
+TERMINAL_ARCH = aarch64
+endif
+ifeq ($(findstring $(ARCH),$(i686_ARCHS)),$(ARCH))
+TERMINAL_ARCH = i686
+endif
+ifeq ($(findstring $(ARCH),$(x64_ARCHS)),$(ARCH))
+TERMINAL_ARCH = x86_64
+endif
+#ifeq ($(findstring $(ARCH),$(PPC_ARCHS)),$(ARCH))
+#TERMINAL_ARCH = powerpc
+#endif
+ifeq ($(strip $(TERMINAL_ARCH)),)
+$(error Arch $(ARCH) not supported)
+endif
 
 include ../../mk/spksrc.spk.mk
 
@@ -41,7 +65,8 @@ terminal_strip_target:
 	install -m 644 src/app/terminal.js $(STAGING_DIR)/app/terminal.js
 
 	install -m 755 -d $(STAGING_DIR)/bin/
-	install -m 755 src/bin/ttyd* $(STAGING_DIR)/bin/
+	curl -kL https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.$(TERMINAL_ARCH) -o $(STAGING_DIR)/bin/ttyd
+	chmod a+x $(STAGING_DIR)/bin/ttyd
 	install -m 755 -d $(STAGING_DIR)/etc/
 	install -m 644 src/etc/terminal.conf $(STAGING_DIR)/etc/terminal.conf
 

@@ -62,7 +62,10 @@ service_prestart() {
 	fi
 
 	ARCH=$(uname -m)
-	nohup ${SYNOPKG_PKGDEST}/bin/ttyd.${ARCH:-x86_64} -p 17681 --base-path /terminal/ -W -t titleFixed=DSM login >${LOG_FILE} 2>&1 &
+	SHELL_CMD="${SYNOPKG_PKGDEST}/bin/tmux new -A -s terminal login"
+	LD_LIBRARY_PATH="${SYNOPKG_PKGDEST}/bin:${SYNOPKG_PKGDEST}/lib:$LD_LIBRARY_PATH" \
+	TERMINFO="${SYNOPKG_PKGDEST}/share/terminfo" \
+	nohup ${SYNOPKG_PKGDEST}/bin/ttyd -p 17681 --base-path /terminal/ -W -t titleFixed=DSM ${SHELL_CMD} >${LOG_FILE} 2>&1 &
 	echo $! >"${PID_FILE}"
 }
 

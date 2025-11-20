@@ -1,0 +1,3 @@
+bin:bin/tmux
+rsc:share/tabset/*
+rsc:share/terminfo/*
