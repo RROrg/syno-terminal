@@ -52,7 +52,7 @@ service_prestart() {
 	echo "service_prestart: Before service start"
 
 	# /etc/nginx/conf.d/alias.*.conf or /usr/syno/share/nginx/conf.d/dsm.*.conf
-	ln -s ${SYNOPKG_PKGDEST}/etc/terminal.conf /etc/nginx/conf.d/alias.terminal.conf
+	ln -s ${SYNOPKG_PKGDEST}/etc/alias.terminal.conf /etc/nginx/conf.d/alias.terminal.conf
 
 	if nginx -t >/dev/null 2>&1; then
 		systemctl reload nginx
@@ -62,10 +62,11 @@ service_prestart() {
 	fi
 
 	ARCH=$(uname -m)
-	SHELL_CMD="${SYNOPKG_PKGDEST}/bin/tmux -u new -A -s terminal login"
+	TMUX_ARGS="${SYNOPKG_PKGDEST}/bin/tmux -u -f ${SYNOPKG_PKGDEST}/etc/terminal_tmux.conf new -A -s terminal"
+	TTYD_ARGS="$(cat ${SYNOPKG_PKGDEST}/etc/terminal_ttyd.conf 2>/dev/null | xargs)"
 	LD_LIBRARY_PATH="${SYNOPKG_PKGDEST}/bin:${SYNOPKG_PKGDEST}/lib:$LD_LIBRARY_PATH" \
 	TERMINFO="${SYNOPKG_PKGDEST}/share/terminfo" \
-	nohup ${SYNOPKG_PKGDEST}/bin/ttyd -p 17681 --base-path /terminal/ -W -t titleFixed=DSM -t allow-clipboard-read=true -t rendererType=canvas ${SHELL_CMD} >${LOG_FILE} 2>&1 &
+	nohup ${SYNOPKG_PKGDEST}/bin/ttyd ${TTYD_ARGS} ${TMUX_ARGS} >${LOG_FILE} 2>&1 &
 	echo $! >"${PID_FILE}"
 }
 

@@ -1,6 +1,6 @@
 SPK_NAME = terminal
 SPK_VERS = 3.0
-SPK_REV = 1
+SPK_REV = 2
 SPK_ICON = src/$(SPK_NAME).png
 
 DEPENDS = cross/tmux
@@ -68,7 +68,9 @@ terminal_strip_target:
 	curl -kL https://github.com/tsl0922/ttyd/releases/latest/download/ttyd.$(TERMINAL_ARCH) -o $(STAGING_DIR)/bin/ttyd
 	chmod a+x $(STAGING_DIR)/bin/ttyd
 	install -m 755 -d $(STAGING_DIR)/etc/
-	install -m 644 src/etc/terminal.conf $(STAGING_DIR)/etc/terminal.conf
+	install -m 644 src/etc/alias.terminal.conf $(STAGING_DIR)/etc/alias.terminal.conf
+	install -m 644 src/etc/terminal_tmux.conf $(STAGING_DIR)/etc/terminal_tmux.conf
+	install -m 644 src/etc/terminal_ttyd.conf $(STAGING_DIR)/etc/terminal_ttyd.conf
 
 	install -m 755 -d $(STAGING_DIR)/app/help
 	for language in chs enu; do \

@@ -5,7 +5,7 @@
 syno-terminal 是一个为群晖 NAS 提供 Web 终端访问的套件，支持多架构（x86/ARM），可通过浏览器安全地访问 NAS 终端。
 
 ## 安装方法
-1. 在套件中心手动安装 syno-terminal
+1. 在套件中心手动安装 syno-terminal.spk
 2. 安装失败后，按提示 SSH 登录 DSM，执行：
    ```sh
    sudo sed 's/package/root/g' -i /var/packages/terminal/conf/privilege
@@ -16,8 +16,9 @@ syno-terminal 是一个为群晖 NAS 提供 Web 终端访问的套件，支持�
 ## 常见问题
 - 启动失败：请确认已按安装说明修改 privilege 文件并以 root 启动
 
-## 许可证
-MIT License
+## 配置文件
+- 配置文件位于 `/var/packages/terminal/target/etc/` 目录下，修改后需要重启服务才能生效。
+
 
 ## Tmux 快捷键中英文对照表 (C = Ctrl, S = Shift, M = Alt)
 | 快捷键         | 中文说明                       | 英文说明                                 |
@@ -96,3 +97,6 @@ MIT License
 | C-b S-Down     | 将窗口向下移动 1 个单位       | Move the visible part of the window down           |
 | C-b S-Left     | 将窗口向左移动 1 个单位       | Move the visible part of the window left           |
 | C-b S-Right    | 将窗口向右移动 1 个单位       | Move the visible part of the window right          |
+
+## 许可证
+MIT License
